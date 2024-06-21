@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PM2E1004700580400</string>
+    <string name="btnVer">BotonVer</string>
+    <string name="btnCompartir">Boton de compartir</string>
+    <string name="btnEliminar">Boton de eliminar</string>
+    <string name="btnActualizar">Boton de Actualizar</string>
+    <string name="btnAtras">Boton para Atras</string>
+    <string name="buscar">Buscar</string>
 </resources>
