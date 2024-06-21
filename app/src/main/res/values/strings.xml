@@ -1,9 +1,40 @@
 <resources>
     <string name="app_name">PM2E1004700580400</string>
+
+    <!-- Text Button Actions -->
+    <string name="btnAdd">+</string>
+    <string name="btnBtnSave">Salvar Contacto</string>
+    <string name="btnNextView">Contactos Salvados</string>
+    <!-- End Text Button Actions -->
+
+    <!-- Text Labels -->
+    <string name="textCountry">País: </string>
+    <string name="textName">Nombre: </string>
+    <string name="textTel">Telefono: </string>
+    <string name="textNota">Nota: </string>
+    <!-- End Text Labels -->
+
+    <!-- Text Placeholder input -->
+    <string name="placeholderName">Nombre</string>
+    <string name="placeholderTel">Telefono</string>
+    <string name="placeholderNota">Nota</string>
+    <!-- End Text Placeholder input -->
+
+    <!-- Text Options Countries spinner -->
+    <string-array name="countries">
+        <item>-- SELECCIONE --</item>
+        <item>Honduras +504</item>
+        <item>Costa Rica +506</item>
+        <item>Guatemala +502</item>
+        <item>El Salvador +503</item>
+    </string-array>
+    <!-- End Text Options Countries spinner -->
+
     <string name="btnVer">BotonVer</string>
     <string name="btnCompartir">Boton de compartir</string>
     <string name="btnEliminar">Boton de eliminar</string>
     <string name="btnActualizar">Boton de Actualizar</string>
     <string name="btnAtras">Boton para Atras</string>
     <string name="buscar">Buscar</string>
+
 </resources>
