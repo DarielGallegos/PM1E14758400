@@ -3,12 +3,14 @@ package service.impl;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import java.util.ArrayList;
 
 import controller.impl.listControllerImpl;
 import models.Contactos;
 import repository.ConnectDB;
+import repository.entity.TBL_CONTACTOS;
 import service.listService;
 import repository.entity.DB_VALUES;
 
@@ -42,5 +44,18 @@ public class listServiceImpl implements listService {
         cursor.close();
         db.close();
         this.controller.getData(list);
+    }
+
+    @Override
+    public void deleteContact(int id) {
+        String msg;
+        try{
+            db = this.connect.getWritableDatabase();
+            int status = db.delete(TBL_CONTACTOS.TABLE_NAME, TBL_CONTACTOS.ID + " = " + id, null);
+            this.controller.deleteContact((long) status);
+        }catch(SQLiteException ex){
+            msg = "Error al eliminar contacto";
+            throw new SQLiteException(msg, ex);
+        }
     }
 }

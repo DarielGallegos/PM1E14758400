@@ -5,6 +5,14 @@
     <string name="btnAdd">+</string>
     <string name="btnBtnSave">Salvar Contacto</string>
     <string name="btnNextView">Contactos Salvados</string>
+    <string name="btnVer">BotonVer</string>
+    <string name="btnCompartir">Boton de compartir</string>
+    <string name="btnEliminar">Boton de eliminar</string>
+    <string name="btnActualizar">Boton de Actualizar</string>
+    <string name="btnAtras">Boton para Atras</string>
+    <string name="buscar">Buscar</string>
+    <string name="btnSi">Si</string>
+    <string name="btnNo">No</string>
     <!-- End Text Button Actions -->
 
     <!-- Text Labels -->
@@ -29,12 +37,4 @@
         <item>El Salvador +503</item>
     </string-array>
     <!-- End Text Options Countries spinner -->
-
-    <string name="btnVer">BotonVer</string>
-    <string name="btnCompartir">Boton de compartir</string>
-    <string name="btnEliminar">Boton de eliminar</string>
-    <string name="btnActualizar">Boton de Actualizar</string>
-    <string name="btnAtras">Boton para Atras</string>
-    <string name="buscar">Buscar</string>
-
 </resources>
