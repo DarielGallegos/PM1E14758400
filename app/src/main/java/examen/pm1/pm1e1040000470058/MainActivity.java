@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements mainView {
         txtPhone.setText("");
         txtNote.setText("");
         cboCountries.setSelection(0);
-        imgPhoto.setImageDrawable(null);
+        imgPhoto.setImageResource(R.mipmap.perfil);
     }
 
     @Override
