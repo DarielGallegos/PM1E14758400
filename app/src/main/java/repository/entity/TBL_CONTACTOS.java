@@ -19,4 +19,5 @@ public class TBL_CONTACTOS {
 
     public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     public static final String GET_ALL = "SELECT * FROM " + TABLE_NAME;
+    public static final String GET_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = ?";
 }

@@ -10,7 +10,7 @@ public class Contactos {
 
     public Contactos(){}
 
-    public Contactos(String pais, String nombre, String telefono, String nota, String foto) {
+    public Contactos(String nombre, String telefono, String nota, String pais, String foto) {
         this.Pais = pais;
         this.Nombre = nombre;
         this.Telefono = telefono;

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements mainView {
                 cboCountries.setSelection(0);
             }else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Campos Vacios").setMessage("Favor llenar los campos: \n - Pais \n - Nombre \n - Telefono \n - Nota");
+                builder.setTitle("Alerta Campos Vacios").setMessage("Favor llenar los campos: \n - Pais \n - Nombre \n - Telefono \n - Nota");
                 builder.create().show();
             }
         });
