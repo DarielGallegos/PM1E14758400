@@ -130,7 +130,11 @@ public class MainActivity extends AppCompatActivity implements mainView {
 
     @Override
     public void insertContact(String msg) {
-        Log.i("Insert", msg);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Registro").setMessage(msg).setPositiveButton("Aceptar", (dialogThis, which) -> {
+            dialogThis.dismiss();
+        });
+        dialog.create().show();
     }
 
     @Override
