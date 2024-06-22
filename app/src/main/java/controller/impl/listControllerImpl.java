@@ -20,7 +20,7 @@ public class listControllerImpl implements listController {
 
     @Override
     public void getData(ArrayList<Contactos> List) {
-        ArrayList<String> list = (ArrayList<String>) List.stream().map(x -> x.getId() + " - " + x.getNombre() + " - " + x.getTelefono()).collect(toList());
+        ArrayList<String> list = (ArrayList<String>) List.stream().map(x -> x.getId() + " - " + x.getNombre() + " - " +x.getTelefono()).collect(toList());
         this.view.fillList(list);
     }
 

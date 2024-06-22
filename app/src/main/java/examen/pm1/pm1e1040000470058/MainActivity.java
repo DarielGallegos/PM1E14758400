@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements mainView {
         txtPhone = findViewById(R.id.txtPhone);
         txtNote = findViewById(R.id.txtNote);
         imgPhoto = findViewById(R.id.imgContact);
+        if(getIntent().getIntExtra("ID", 0) != 0){
+            service.findById(getIntent().getIntExtra("ID", 0));
+        }
         btnSave.setOnClickListener(v -> {
             int size = cboCountries.getSelectedItem().toString().split(" ").length;
             String code = cboCountries.getSelectedItem().toString().split(" ")[size - 1];
@@ -62,15 +66,17 @@ public class MainActivity extends AppCompatActivity implements mainView {
             String note = txtNote.getText().toString().trim();
             Bitmap bm = (imgPhoto.getDrawable() != null) ? ((BitmapDrawable)imgPhoto.getDrawable()).getBitmap() : null;
             String photo = utils.ImagesConvert.convertBase64(bm);
-            if(!code.equals("--") && !name.isEmpty() && !phone.isEmpty() && !note.isEmpty()){
-                service.insertContact(new Contactos(name, phone, note, code, photo));
-                txtName.setText("");
-                txtPhone.setText("");
-                txtNote.setText("");
-                cboCountries.setSelection(0);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Alerta Campos Vacios").setMessage("Favor llenar los campos: \n - Pais \n - Nombre \n - Telefono \n - Nota \n - Foto");
+            if(!code.equals("--") && !name.isEmpty() && !phone.isEmpty() && !note.isEmpty() && bm != null) {
+                if(getIntent().getIntExtra("ID", 0) != 0){
+                    service.updateContact(new Contactos(name, phone, note, code, photo), getIntent().getIntExtra("ID", 0));
+                    flush(txtName, txtPhone, txtNote, cboCountries, imgPhoto);
+                }else{
+                    service.insertContact(new Contactos(name, phone, note, code, photo));
+                    flush(txtName, txtPhone, txtNote, cboCountries, imgPhoto);
+                }
             }else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Alerta Campos Vacios").setMessage("Favor llenar los campos: \n - Pais \n - Nombre \n - Telefono \n - Nota");
                 builder.create().show();
             }
         });
@@ -80,6 +86,14 @@ public class MainActivity extends AppCompatActivity implements mainView {
         btnTakePhoto.setOnClickListener(v -> {
             utils.Permissions.checkCameraPermission(this);
         });
+    }
+
+    private void flush(TextView txtName, TextView txtPhone, TextView txtNote, Spinner cboCountries, ImageView imgPhoto){
+        txtName.setText("");
+        txtPhone.setText("");
+        txtNote.setText("");
+        cboCountries.setSelection(0);
+        imgPhoto.setImageDrawable(null);
     }
 
     @Override
@@ -107,5 +121,31 @@ public class MainActivity extends AppCompatActivity implements mainView {
     @Override
     public void insertContact(String msg) {
         Log.i("Insert", msg);
+    }
+
+    @Override
+    public void findById(Contactos e, Bitmap bm) {
+        txtName.setText(e.getNombre());
+        txtPhone.setText(e.getTelefono());
+        txtNote.setText(e.getNota());
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) cboCountries.getAdapter();
+        for(int i = 0; i < adapter.getCount(); i++){
+            if(adapter.getItem(i).contains(e.getPais())){
+                cboCountries.setSelection(i);
+                break;
+            }
+        }
+        imgPhoto.setImageBitmap(bm);
+    }
+
+    @Override
+    public void updateContact(String msg) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Alerta").setMessage(msg);
+        dialog.setPositiveButton("Aceptar", (dialog1, which) -> {
+            dialog1.dismiss();
+            finish();
+        });
+        dialog.create().show();
     }
 }

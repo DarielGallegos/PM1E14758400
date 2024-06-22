@@ -45,6 +45,8 @@ public class ActivityList extends AppCompatActivity implements listView {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        AlertDialog.Builder err = new AlertDialog.Builder(this);
+        err.setTitle("Error").setMessage("No se puede realizar la acción, sin haber seleccionado un contacto.");
         listaContactos = findViewById(R.id.listaContacto);
         btnBack = findViewById(R.id.btnAtras);
         btnShare = findViewById(R.id.btnCompartir);
@@ -60,24 +62,16 @@ public class ActivityList extends AppCompatActivity implements listView {
                 String selectedItem = (String) parent.getItemAtPosition(position);
                 ID = Integer.parseInt(selectedItem.split(" ")[0]);
                 nombreContact = selectedItem.split("-")[1];
-                int size = selectedItem.split(" ")[2].length();
-                phonenumber = selectedItem.split(" ")[size];
+                int size = selectedItem.split(" ").length;
+                phonenumber = selectedItem.split(" ")[size-1];
             }
         });
-        btnDelete.setOnClickListener(v -> {
-           if(ID != 0){
-               service.deleteContact(ID);
-               ID = 0;
-               service.getData();
-           }
-        });
         listaContactos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = (String) parent.getItemAtPosition(position);
-                int size = selectedItem.split(" ")[2].length();
-                phonenumber = selectedItem.split(" ")[size];
+                int size = selectedItem.split(" ").length;
+                phonenumber = selectedItem.split(" ")[size-1];
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityList.this);
                 builder.setTitle("Acción").setMessage("Desea llamar a: " + phonenumber);
                 builder.setPositiveButton(R.string.btnSi, (dialog, which) -> {
@@ -92,18 +86,44 @@ public class ActivityList extends AppCompatActivity implements listView {
         });
 
         btnShare.setOnClickListener(v -> {
-            Intent shareContact = new Intent(Intent.ACTION_SEND);
-            shareContact.putExtra(Intent.EXTRA_TEXT, "Nombre: " + nombreContact + "\nTelefono: " + phonenumber);
-            shareContact.setType("text/plain");
-            Intent share = Intent.createChooser(shareContact, "Compartir contacto");
-            startActivity(share);
+            if(ID != 0) {
+                Intent shareContact = new Intent(Intent.ACTION_SEND);
+                shareContact.putExtra(Intent.EXTRA_TEXT, "Nombre: " + nombreContact + "\nTelefono: " + phonenumber);
+                shareContact.setType("text/plain");
+                Intent share = Intent.createChooser(shareContact, "Compartir contacto");
+                startActivity(share);
+            }else{
+                err.create().show();
+            }
         });
         btnShowImage.setOnClickListener(v -> {
-           Intent intent = new Intent(getApplicationContext(),InfoContactActivity.class);
-           intent.putExtra("id", ID);
-           startActivity(intent);
+            if(ID != 0) {
+                Intent intent = new Intent(getApplicationContext(), InfoContactActivity.class);
+                intent.putExtra("id", ID);
+                startActivity(intent);
+            }else{
+                err.create().show();
+            }
         });
-
+        btnUpdate.setOnClickListener(v -> {
+            if(ID != 0){
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("ID", ID);
+                startActivity(intent);
+                finish();
+            }else{
+                err.create().show();
+            }
+        });
+        btnDelete.setOnClickListener(v -> {
+            if(ID != 0){
+                service.deleteContact(ID);
+                ID = 0;
+                service.getData();
+            }else{
+                err.create().show();
+            }
+        });
         btnBack.setOnClickListener(v -> {
             finish();
         });

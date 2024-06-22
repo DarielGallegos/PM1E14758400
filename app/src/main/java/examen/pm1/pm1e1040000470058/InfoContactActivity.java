@@ -2,6 +2,7 @@ package examen.pm1.pm1e1040000470058;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,7 @@ public class InfoContactActivity extends AppCompatActivity implements infoContac
 
     private infoContactServiceImpl service = new infoContactServiceImpl(this);
     ImageView imgPhoto;
+    Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,10 @@ public class InfoContactActivity extends AppCompatActivity implements infoContac
             return insets;
         });
         imgPhoto = findViewById(R.id.imgContactSave);
+        btnBack = findViewById(R.id.btnBackInfoContact);
+        btnBack.setOnClickListener(v -> {
+           finish();
+        });
         service.getData(getIntent().getIntExtra("id", 0));
     }
 
