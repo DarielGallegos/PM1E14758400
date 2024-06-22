@@ -67,7 +67,14 @@ public class MainActivity extends AppCompatActivity implements mainView {
             Bitmap bm = (imgPhoto.getDrawable() != null) ? ((BitmapDrawable)imgPhoto.getDrawable()).getBitmap() : null;
             String photo = utils.ImagesConvert.convertBase64(bm);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Alerta Campos Vacios").setMessage("Favor llenar los campos: \n - Pais \n - Nombre \n - Telefono \n - Nota \n - Foto");
+            builder.setTitle("Alerta Campos Vacios");
+            String msg = "";
+            msg += (name.isEmpty()) ? " - Nombre\n" : "";
+            msg += (phone.isEmpty()) ? " - Telefono\n" : "";
+            msg += (note.isEmpty()) ? " - Nota\n" : "";
+            msg += (code.equals("--")) ? " - Pais\n" : "";
+            msg += (bm == null) ? " - Foto\n" : "";
+            builder.setMessage(msg);
             if(!code.equals("--") && !name.isEmpty() && !phone.isEmpty() && !note.isEmpty() && bm != null) {
                 if(getIntent().getIntExtra("ID", 0) != 0){
                     service.updateContact(new Contactos(name, phone, note, code, photo), getIntent().getIntExtra("ID", 0));
@@ -77,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements mainView {
                     flush(txtName, txtPhone, txtNote, cboCountries, imgPhoto);
                 }
             }else{
+                builder.setPositiveButton("Aceptar", (dialog, which) -> {
+                    dialog.dismiss();
+                });
                 builder.create().show();
             }
         });

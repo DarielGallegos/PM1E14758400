@@ -27,7 +27,7 @@ public class Permissions {
 
     public static void takePhoto(Context context){
         Intent photoActivity = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(photoActivity.resolveActivity(context.getPackageManager()) == null){
+        if(photoActivity.resolveActivity(context.getPackageManager()) != null){
             ((Activity) context).startActivityForResult(photoActivity, REQUEST_TAKE_PHOTO);
         }
     }
@@ -42,7 +42,7 @@ public class Permissions {
 
     public static void initCall(Context context, String phonenumber){
         Intent call = new Intent(Intent.ACTION_CALL);
-        if(call.resolveActivity(context.getPackageManager()) == null){
+        if(call.resolveActivity(context.getPackageManager()) != null){
             call.setData(Uri.parse("tel:"+phonenumber));
             ((Activity) context).startActivity(call);
         }

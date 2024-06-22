@@ -117,9 +117,17 @@ public class ActivityList extends AppCompatActivity implements listView {
         });
         btnDelete.setOnClickListener(v -> {
             if(ID != 0){
-                service.deleteContact(ID);
-                ID = 0;
-                service.getData();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Alerta").setMessage("Desea eliminar el contacto: " + nombreContact);
+                builder.setPositiveButton(R.string.btnSi, (dialog, which) -> {
+                    service.deleteContact(ID);
+                    ID = 0;
+                    service.getData();
+                });
+                builder.setNegativeButton(R.string.btnNo, (dialog, which) -> {
+                    dialog.dismiss();
+                });
+                builder.create().show();
             }else{
                 err.create().show();
             }
@@ -155,6 +163,8 @@ public class ActivityList extends AppCompatActivity implements listView {
     @Override
     public void deleteContact(String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Alerta").setMessage(msg).create().show();
+        builder.setTitle("Alerta").setMessage(msg).setPositiveButton("Aceptar", (dialog, which) -> {
+            dialog.dismiss();
+        }).create().show();
     }
 }
