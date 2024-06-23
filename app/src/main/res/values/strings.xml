@@ -37,4 +37,5 @@
         <item>El Salvador +503</item>
     </string-array>
     <!-- End Text Options Countries spinner -->
+    <string name="mensajes"></string>
 </resources>

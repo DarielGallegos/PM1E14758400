@@ -42,7 +42,7 @@ public class Permissions {
 
     public static void initCall(Context context, String phonenumber){
         Intent call = new Intent(Intent.ACTION_CALL);
-        if(call.resolveActivity(context.getPackageManager()) != null){
+        if(call.resolveActivity(context.getPackageManager()) == null){
             call.setData(Uri.parse("tel:"+phonenumber));
             ((Activity) context).startActivity(call);
         }
