@@ -110,7 +110,6 @@ public class ActivityList extends AppCompatActivity implements listView {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("ID", ID);
                 startActivity(intent);
-                finish();
             }else{
                 err.create().show();
             }
